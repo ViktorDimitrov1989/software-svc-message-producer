@@ -1,0 +1,54 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'eclipse'
+	id 'idea'
+}
+
+group = 'com.vd.'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+ext {
+	set('springCloudVersion', "Hoxton.SR7")
+}
+
+dependencies {
+	//transitively brings Project Reactor
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
+	//spring cloud dependencies
+	compile('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
+	//compile('org.springframework.cloud:spring-cloud-stream-reactive')
+	//the foundation for a Reactive Spring web applications
+	compile('org.springframework.boot:spring-boot-starter-webflux')
+	//third party library which supports reactive multipart file upload
+	compile('org.synchronoss.cloud:nio-multipart-parser:1.1.0')
+    compile('org.springframework.boot:spring-boot-devtools')
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	//lombok
+	compileOnly('org.projectlombok:lombok:1.18.6')
+	compile('org.json:json:20190722')
+	annotationProcessor('org.projectlombok:lombok:1.18.6')
+	//use embedded mongoDB dependency used for testing purposes
+	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
+	testCompile('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+	}
+}
