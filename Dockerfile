@@ -1,6 +1,7 @@
+#Dockerfile creation info: https://spring.io/guides/gs/spring-boot-docker/
 FROM openjdk:8-jdk-alpine
 
-#run the app as non-root user see - https://security.stackexchange.com/questions/106860/can-a-root-user-inside-a-docker-lxc-break-the-security-of-the-whole-system
+#run the app as non-root user see: https://security.stackexchange.com/questions/106860/can-a-root-user-inside-a-docker-lxc-break-the-security-of-the-whole-system
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 

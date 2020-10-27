@@ -18,12 +18,12 @@ pipeline {
         }
         stage("Docker build") {
             steps {
-                sh "docker build -t software-svc-message-producer ."
+                sh "docker build -t docker.io/viktordimitrov/software-svc-message-producer:${BUILD_NUMBER} ."
             }
         }
         stage("Docker push") {
             steps {
-                sh "docker push localhost:5000/software-svc-message-producer:${BUILD_NUMBER}"
+                sh "docker push docker.io/viktordimitrov/software-svc-message-producer:${BUILD_NUMBER}"
             }
         }
     }
