@@ -23,7 +23,9 @@ pipeline {
         }
         stage("Docker push") {
             steps {
-                sh "docker push docker.io/viktordimitrov/software-svc-message-producer:${BUILD_NUMBER}"
+                withDockerRegistry([ credentialsId: "123", url: "" ]) {
+                    sh "docker push viktordimitrov/software-svc-message-producer:${BUILD_NUMBER}"
+                }
             }
         }
     }
